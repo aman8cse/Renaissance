@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import eventRoutes from "./routes/event.routes.js";
+
 const app = express();
 
 // app.use(
@@ -27,12 +29,9 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-import userRouter from "./routes/user.route.js";
-
-
-
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/admin", tradingRoute);
-app.use("/api/v1/blockchain", blockChainRouter);
+app.use("/api/events", eventRoutes);
+app.get("/", (req, res) => {
+  res.json({ status: "OK", message: "Renaissance 26 API Running"});
+})
 
 export { app };
