@@ -2,14 +2,15 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import eventRoutes from "./routes/event.routes.js";
+
 const app = express();
 
 // app.use(
 //   cors({
 //     origin: [
 //       "http://localhost:5173",
-//       "https://mercat-ten.vercel.app",
-//       "https://papertrading-2u5c.onrender.com",
+//       " other hosted url "
 //     ],
 //     credentials: true,
 //   })
@@ -28,9 +29,9 @@ app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-import userRouter from "./routes/user.route.js";
-
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/admin", adminRouter);
+app.use("/api/events", eventRoutes);
+app.get("/", (req, res) => {
+  res.json({ status: "OK", message: "Renaissance 26 API Running"});
+})
 
 export { app };
