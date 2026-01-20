@@ -21,7 +21,9 @@ export const createEvent = async(req, res, next) => {
 
         res.status(201).json({success: true, event});
     } catch {
+        // this is not correct approch in catch 
         next(error);
+       
     }
 };
 
@@ -57,6 +59,7 @@ export const registerForEvent = async (req, res, next) => {
     try {
         const userId = req.user._id;
         const { eventId } = req.params;
+// we can use event id in form of hash for better security 
 
         const event = await Event.findById(eventId);
         if(!event) {
@@ -75,10 +78,13 @@ export const registerForEvent = async (req, res, next) => {
         const registration = await EventRegistration.create({
             userId,
             eventId,
-            coinsPaid: event.entryFeeCoins
+           
         });
 
+
+
         res.status(201).json({
+            // add a message too 
             success: true,
             registration
         });
@@ -90,7 +96,7 @@ export const registerForEvent = async (req, res, next) => {
 export const cancelRegistration = async (req, res, next) => {
     try {
         const userId = req.user._Id;
-        const event = req.params;
+        const eventId = req.params;
 
         const registration = await EventRegistration.findOne({
             userId, 

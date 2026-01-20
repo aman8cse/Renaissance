@@ -7,16 +7,17 @@ import {
     cancelRegistration
 } from "../controllers/eventController.js";
 
-import { isAuthenticated} from "../middlewares/authMiddleware.js";
+import { authorizeRoles, isAuthenticated, verifyJWT} from "../middlewares/authMiddleware.js";
 import { isAdminAuthenticated } from "../middlewares/adminMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", isAdminAuthenticated, createEvent);
-router.delete("/:eventId", isAdminAuthenticated, deleteEvent);
-
+router.post("/", verifyJWT,authorizeRoles(2), createEvent);
+router.delete("/:eventId", verifyJWT,authorizeRoles(2), deleteEvent);
+// error from line 15 and 18 make confussion on which controller to call 
 router.get("/", getAllEvents);
-router.post("/:eventId/register", isAuthenticated, registerForEvent);
-router.delete("/:eventId/cancel", isAuthenticated, cancelRegistration);
+router.post("/:eventId/register", verifyJWT, registerForEvent);
+// not a proper mention who going to cancel the registration like in case of disqualified 
+router.delete("/:eventId/cancel", verifyJWT, cancelRegistration);
 
 export default router;

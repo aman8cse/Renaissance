@@ -5,6 +5,7 @@ const connectDB = async () => {
     const connectionInstance = await mongoose.connect(
       `${process.env.MONGO_URI}`
     )
+    // this is unnessary filling log size 
     console.log(
       `\n MongoDB connected !! DB Host:${connectionInstance.connection.host} on port ${process.env.PORT}`
     );

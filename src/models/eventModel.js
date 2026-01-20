@@ -45,6 +45,11 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    freeCoins :{
+        type: Number,
+        default: 10,
+        
+    },
 
     entryFeeCoins: {
         type: Number,
