@@ -10,13 +10,21 @@ export default function Navbar() {
     const[menu, setMenu] = useState(false); 
     const menuRef = useRef(null);
     const mobileOptionRef = useRef([]);
+
+    function handleClick(option) {
+        if(option === "E-Cell") {
+            window.open("https://www.edcjss.com/");
+            return;
+        }
+         navigate(`/${option.toLowerCase()}`);
+    }
     
 
     const mobileMenu = (<>
         <div ref={menuRef} className="mobileMenu">
             <br/>
             {options.map((option, i) => (
-                <div onClick={() => navigate(`/${option.toLowerCase()}`)} key={i} ref={(el) => (mobileOptionRef.current[i] = el)} className='option'>{option}</div>
+                <div onClick={() => handleClick(option)} key={i} ref={(el) => (mobileOptionRef.current[i] = el)} className='option'>{option}</div>
             ))}
             <RegisterBtn name={"Register"} />
             <br />
@@ -29,7 +37,7 @@ export default function Navbar() {
             <div className="logo" onClick={() => navigate("/")}>Renaissance</div>
             <div className='options'>
                 {options.map((option, i) => (
-                    <div key={i} className='option' onClick={() => navigate(`/${option.toLowerCase()}`)}>{option}</div>
+                    <div key={i} className='option' onClick={() => handleClick(option)}>{option}</div>
                 ))}
                 <RegisterBtn name={"Register"} />
                 <br />
