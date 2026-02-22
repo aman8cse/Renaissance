@@ -1,6 +1,6 @@
 import React from 'react'
 import '../styles/speakers.css';
-import SpeakerCard from '../components/speakerCard'
+import SpeakerCard from '../components/SpeakerCard'
 
 export default function Speakers() {
     const speakersData = [
