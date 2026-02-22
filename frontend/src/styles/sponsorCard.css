@@ -1,0 +1,37 @@
+.sponsorCard {
+  width: 100%;
+  max-width: 220px;
+  height: 140px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.5rem;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sponsorCard:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 0 40px rgba(150, 0, 255, 0.25);
+}
+
+.sponsorImage {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(1.1);
+}

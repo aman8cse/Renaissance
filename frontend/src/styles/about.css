@@ -1,0 +1,50 @@
+.about{
+    width: 70vw;
+    height: 70vh;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3);
+
+    color: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.headline{
+    font-size: 42px;
+    font-weight: 800;
+    color: #7b2ff7;
+}
+
+p {
+    text-align: center;
+    width: 80%;
+    font-size: 28px;
+    font-weight: 900;
+} 
+.liner {
+    color: rgb(240, 209, 33);
+    font-size: 22px;
+}
+.outro {
+    font-weight: 100;
+    color: #d6d6d6;
+    font-size: 22px;
+}
+
+@media (max-width : 750px) {
+    .homepage{
+        width: 90vw;
+        height: 60vh;
+    }
+}

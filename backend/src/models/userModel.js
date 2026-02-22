@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,6 +40,9 @@ const userSchema = new mongoose.Schema(
       enum: [0, 1, 2],
       // user =0, volute =1, adm=2,
       default: 0,
+    },
+    refreshToken: {
+      type: String,
     },
   },
   { timestamps: true },

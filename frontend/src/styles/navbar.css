@@ -1,0 +1,123 @@
+.navbar {
+    width: 90vw;
+    height: 8vh;
+
+    position: sticky;
+    left: 5vw;
+    top: 2vh;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 30px;
+ 
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.9);
+
+    z-index: 11;
+}
+ 
+.navbar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    padding: 1px;
+    background: linear-gradient(
+        135deg,
+        rgba(150, 0, 255, 0.3),
+        rgba(0, 200, 255, 0.3)
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+ 
+
+.logo {
+    padding-inline: 5vw;
+    cursor: pointer;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+ 
+
+.options {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.option {
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.option:hover {
+    color: #9f5cff;
+    text-shadow: 0 0 10px rgba(159, 92, 255, 0.6);
+}
+ 
+
+.hamburger {
+    display: none;
+    margin-inline: 5vw;
+    cursor: pointer;
+}
+ 
+
+.mobileMenu {
+    position: absolute;
+    top: 110%;
+    right: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    width: 30vw;
+    padding: 1.5rem;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.5);
+}
+ 
+
+@media (max-width: 750px) {
+    .hamburger {
+        display: block;
+    }
+
+    .options {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    .mobileMenu {
+        width: 60vw;
+    }
+}

@@ -1,0 +1,51 @@
+.sponsorTrailWrapper {
+  overflow: hidden;
+  width: 100%;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.sponsorTrail {
+  display: flex;
+  gap: 4rem;
+  width: max-content;
+  animation: scrollTrail 25s linear infinite;
+}
+
+.trailItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+} 
+
+.trailItem img {
+  height: 40px;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.trailItem img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@keyframes scrollTrail {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .sponsorTrail {
+    gap: 2rem;
+  }
+
+  .trailItem img {
+    height: 30px;
+  }
+}

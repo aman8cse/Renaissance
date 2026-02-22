@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import { asyncHandler, ApiError, ApiResponse } from "../utils/utils.index.js";
 import { User } from "../models/userModel.js";
 
@@ -7,7 +8,7 @@ const gernateAccessAndRefreshTokens = async (userId) => {
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
-    user.refreshToken = refreshToken;
+    user.refreshToken = refreshToken; //Aman : added this field in userModel.js, was missing earlier and causing issue
     await user.save({ validateBeforeSave: false });
 
     return { accessToken, refreshToken };
@@ -78,6 +79,10 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (!email) {
     throw new ApiError(400, "  email is required ");
+  }
+  //Aman : password check, earlier was causing login issue
+  if (!password) {
+    throw new ApiError(400, "  Password is required ");
   }
 
   const user = await User.findOne({
@@ -207,7 +212,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = { secure: true, httpOnly: true, sameSite: "none" };
 
-    const { accessToken, newRefreshToken } =
+    const { accessToken, refreshToken: newRefreshToken } =
       await gernateAccessAndRefreshTokens(user._id);
 
     return res
