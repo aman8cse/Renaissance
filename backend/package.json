@@ -2,7 +2,7 @@
   "name": "renaissance-26",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "src/indexyy.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
