@@ -5,10 +5,8 @@ import "../styles/login.css";
 export default function Login() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
+  const [form, setForm] = useState({ email: "", password: "", mobile: "", username: "" });
+  const[isLogin, setIsLogin] = useState(false);
 
   function handleChange(e) {
     setForm(prev => ({
@@ -17,35 +15,67 @@ export default function Login() {
     }));
   }
 
-  async function handleSubmit(e) {
-  e.preventDefault();
+  async function handleRegister(e) {
+    e.preventDefault();
 
-  const res = await fetch(
-    "https://renaissance-xck3.onrender.com/", 
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        form
-      })
+    try {
+      const res = await fetch("http://localhost:5000/api/user/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text(); 
+        alert(errorText);
+        return;
+      }
+
+      const data = await res.json();
+      alert(data.message);
+
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server not responding");
     }
-  );
-
-  const data = await res.json();
-
-  if (!res.ok) {
-    alert(data.message);
-    return;
   }
 
-  alert("Login success");
-}
+  async function handleLogin(e) {
+    e.preventDefault();
+    try{
+      const res = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password
+        })
+      });
 
-  return (
+      if (!res.ok) {
+        const errorText = await res.text(); 
+        alert(errorText);
+        return;
+      }
+
+      const data = await res.json();
+      alert(data.message);
+
+      navigate("/userDashboard");
+
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server not responding");
+    }
+  }
+
+  const login = (
     <div className="loginWrapper">
-      <form className="loginCard" onSubmit={handleSubmit}>
+      <form className="loginCard" onSubmit={handleLogin}>
         <h2 className="loginTitle">Welcome Back</h2>
 
         <div className="inputGroup">
@@ -75,9 +105,76 @@ export default function Login() {
         </button>
 
         <p className="loginFooter">
-          Don’t have an account? <span onClick={() => navigate("/register")}>Register</span>
+          Don’t have an account? <span onClick={() => setIsLogin(!isLogin)}>Register</span>
         </p>
       </form>
     </div>
+  )
+
+  const register = (
+    <div className="loginWrapper">
+      <form className="loginCard" onSubmit={handleRegister}>
+        <h2 className="loginTitle">Welcome</h2>
+
+        <div className="inputGroup">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="tel"
+            name="mobile"
+            placeholder="Mobile"
+            value={form.mobile}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="loginBtn">
+          Register
+        </button>
+
+        <p className="loginFooter">
+          Have an account? <span onClick={() => setIsLogin(!isLogin)}>Login</span>
+        </p>
+      </form>
+    </div>
+  )
+
+  return (
+    <>
+    {isLogin && login}
+    {!isLogin && register}
+    </>
   );
 }

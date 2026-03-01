@@ -41,7 +41,7 @@ export default function Navbar() {
             {options.map((option, i) => (
                 <div onClick={() => handleClick(option)} key={i} ref={(el) => (mobileOptionRef.current[i] = el)} className='option'>{option}</div>
             ))}
-            <RegisterBtn name={"Register"} />
+            <RegisterBtn onClick={() => {navigate("/auth"); setMenu(false)}} name={"Register"} />
             <br />
         </div>
         </>
@@ -54,7 +54,7 @@ export default function Navbar() {
                 {options.map((option, i) => (
                     <div key={i} className='option' onClick={() => handleClick(option)}>{option}</div>
                 ))}
-                <RegisterBtn onClick name={"Register"} />
+                <RegisterBtn onClick={() => navigate("/auth")} name={"Register"} />
                 <br />
             </div> 
             <div className="hamburger" onClick={(e) => {e.stopPropagation(); setMenu(prev => !prev)}}>{menu ? "X" : "☰"}</div> 
