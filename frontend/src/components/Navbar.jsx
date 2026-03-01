@@ -54,7 +54,7 @@ export default function Navbar() {
                 {options.map((option, i) => (
                     <div key={i} className='option' onClick={() => handleClick(option)}>{option}</div>
                 ))}
-                <RegisterBtn name={"Register"} />
+                <RegisterBtn onClick name={"Register"} />
                 <br />
             </div> 
             <div className="hamburger" onClick={(e) => {e.stopPropagation(); setMenu(prev => !prev)}}>{menu ? "X" : "☰"}</div> 
