@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState, useEffect } from 'react'
 import { gsap } from "gsap";
 import '../styles/navbar.css';
 import RegisterBtn from '../components/registerButton.jsx'
@@ -12,12 +12,33 @@ export default function Navbar() {
     const mobileOptionRef = useRef([]);
 
     function handleClick(option) {
+<<<<<<< HEAD
+=======
+        setMenu(false);
+>>>>>>> second
         if(option === "E-Cell") {
             window.open("https://www.edcjss.com/");
             return;
         }
          navigate(`/${option.toLowerCase()}`);
     }
+<<<<<<< HEAD
+=======
+
+    useEffect(() => {
+        function handleClickOutside(e) {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
+                setMenu(false);
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
+>>>>>>> second
     
 
     const mobileMenu = (<>
@@ -26,7 +47,7 @@ export default function Navbar() {
             {options.map((option, i) => (
                 <div onClick={() => handleClick(option)} key={i} ref={(el) => (mobileOptionRef.current[i] = el)} className='option'>{option}</div>
             ))}
-            <RegisterBtn name={"Register"} />
+            <RegisterBtn onClick={() => {navigate("/auth"); setMenu(false)}} name={"Register"} />
             <br />
         </div>
         </>
@@ -39,10 +60,10 @@ export default function Navbar() {
                 {options.map((option, i) => (
                     <div key={i} className='option' onClick={() => handleClick(option)}>{option}</div>
                 ))}
-                <RegisterBtn name={"Register"} />
+                <RegisterBtn onClick={() => navigate("/auth")} name={"Register"} />
                 <br />
             </div> 
-            <div className="hamburger" onClick={() => setMenu(!menu)}>{menu ? "=" : "X"}</div> 
+            <div className="hamburger" onClick={(e) => {e.stopPropagation(); setMenu(prev => !prev)}}>{menu ? "X" : "☰"}</div> 
             {menu && mobileMenu}
         </div>
     </>

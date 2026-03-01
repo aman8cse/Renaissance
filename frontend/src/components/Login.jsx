@@ -1,0 +1,180 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/login.css";
+
+export default function Login() {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({ email: "", password: "", mobile: "", username: "" });
+  const[isLogin, setIsLogin] = useState(false);
+
+  function handleChange(e) {
+    setForm(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  }
+
+  async function handleRegister(e) {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("http://localhost:5000/api/user/sign-up", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form)
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text(); 
+        alert(errorText);
+        return;
+      }
+
+      const data = await res.json();
+      alert(data.message);
+
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server not responding");
+    }
+  }
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    try{
+      const res = await fetch("http://localhost:5000/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password
+        })
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text(); 
+        alert(errorText);
+        return;
+      }
+
+      const data = await res.json();
+      alert(data.message);
+
+      navigate("/userDashboard");
+
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server not responding");
+    }
+  }
+
+  const login = (
+    <div className="loginWrapper">
+      <form className="loginCard" onSubmit={handleLogin}>
+        <h2 className="loginTitle">Welcome Back</h2>
+
+        <div className="inputGroup">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="loginBtn">
+          Login
+        </button>
+
+        <p className="loginFooter">
+          Don’t have an account? <span onClick={() => setIsLogin(!isLogin)}>Register</span>
+        </p>
+      </form>
+    </div>
+  )
+
+  const register = (
+    <div className="loginWrapper">
+      <form className="loginCard" onSubmit={handleRegister}>
+        <h2 className="loginTitle">Welcome</h2>
+
+        <div className="inputGroup">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="tel"
+            name="mobile"
+            placeholder="Mobile"
+            value={form.mobile}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="inputGroup">
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={form.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="loginBtn">
+          Register
+        </button>
+
+        <p className="loginFooter">
+          Have an account? <span onClick={() => setIsLogin(!isLogin)}>Login</span>
+        </p>
+      </form>
+    </div>
+  )
+
+  return (
+    <>
+    {isLogin && login}
+    {!isLogin && register}
+    </>
+  );
+}
