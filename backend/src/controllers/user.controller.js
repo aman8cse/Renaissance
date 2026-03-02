@@ -62,9 +62,9 @@ const signup = asyncHandler(async (req, res) => {
   );
 
   const options = {
-    secure: true,
+    secure: false,
     httpOnly: true,
-    sameSite: "None",
+    sameSite: "Lax",
     maxAge: 24 * 60 * 60 * 1000,
   };
   return res
@@ -108,9 +108,9 @@ const loginUser = asyncHandler(async (req, res) => {
   );
 
   const options = {
-    secure: true,
+    secure: false,
     httpOnly: true,
-    sameSite: "None",
+    sameSite: "Lax",
     maxAge: 24 * 60 * 60 * 1000,
   };
 
@@ -132,7 +132,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 const getCurrentUser = asyncHandler(async (req, res) => {
   return res
-    .status(200)
+    .status(200)  
     .json(new ApiResponse(200, req.user, "Current user fetched successfully"));
 });
 const logoutUser = asyncHandler(async (req, res) => {

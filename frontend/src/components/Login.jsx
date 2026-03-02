@@ -6,7 +6,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ email: "", password: "", mobile: "", username: "" });
-  const[isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   function handleChange(e) {
     setForm(prev => ({
@@ -24,17 +24,18 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(form)
       });
 
       if (!res.ok) {
-        const errorText = await res.text(); 
-        alert(errorText);
+        const errorData = await res.json();
+        alert(errorData.message);
         return;
       }
 
       const data = await res.json();
-      alert(data.message);
+      navigate("/userDashboard");
 
     } catch (err) {
       console.error("Error:", err);
@@ -50,6 +51,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: form.email,
           password: form.password
@@ -57,14 +59,12 @@ export default function Login() {
       });
 
       if (!res.ok) {
-        const errorText = await res.text(); 
-        alert(errorText);
+        const error = await res.json(); 
+        alert(error.message);
         return;
       }
 
       const data = await res.json();
-      alert(data.message);
-
       navigate("/userDashboard");
 
     } catch (err) {

@@ -156,3 +156,18 @@ export const cancelRegistration = async (req, res, next) => {
         next(err);
     }
 };
+
+export const getMyEvents = async(req, res, next) => {
+    try {
+        const user = req.user;
+        const events = await EventRegistration.find({ user: user._id });
+
+        res.status(200).json({
+            success: true,
+            events
+        });
+        
+    } catch(err) {
+        next(err);
+    }
+}

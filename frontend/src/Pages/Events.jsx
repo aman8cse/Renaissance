@@ -1,11 +1,13 @@
 import React from 'react'
 import '../styles/event.css';
+import RegisterBtn from '../components/registerButton';
 import EventCard from '../components/EventCard'
 
 export default function Event() {
     const eventsData = [
         {
             id: 1,
+            slug: "t1",
             title: "AI Innovation Summit",
             category: "Technical",
             date: "12 April 2026",
@@ -19,6 +21,7 @@ export default function Event() {
         },
         {
             id: 2,
+            slug: "t2",
             title: "Hack The Future",
             category: "Hackathon",
             date: "13 April 2026",
@@ -32,6 +35,7 @@ export default function Event() {
         },
         {
             id: 3,
+            slug: "t3",
             title: "Startup Pitch Arena",
             category: "Entrepreneurship",
             date: "14 April 2026",
@@ -45,6 +49,7 @@ export default function Event() {
         },
         {
             id: 4,
+            slug: "t4",
             title: "Cyber Security Workshop",
             category: "Workshop",
             date: "15 April 2026",
@@ -58,6 +63,7 @@ export default function Event() {
         },
         {
             id: 5,
+            slug: "t5",
             title: "Robotics Showdown",
             category: "Competition",
             date: "16 April 2026",
@@ -71,6 +77,7 @@ export default function Event() {
         },
         {
             id: 6,
+            slug: "t6",
             title: "UI/UX Design Sprint",
             category: "Creative",
             date: "17 April 2026",
@@ -84,6 +91,31 @@ export default function Event() {
         },
     ]; 
 
+    async function handleRegister(slug) {
+        try{
+            const res = await fetch(`http://localhost:5000/api/event/${slug}/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+            });
+
+            if(!res.ok) {
+                const errorData = await res.json();
+                alert(errorData.message);
+                return;
+            }
+
+            const response = await res.json();
+            alert(response.message);
+
+        } catch (err) {
+            console.log("Registration error: ", err);
+            alert("Registration service not working");
+        }
+    }
+
     return (
         <div className="event">
             {eventsData.map(event => (
@@ -95,6 +127,7 @@ export default function Event() {
                     description={event.description}
                     image={event.image}
                     badge={event.badge}
+                    btn={<RegisterBtn onClick={() => handleRegister(event.slug)} name={"Register"}/>}
                 />
             ))}
         </div>

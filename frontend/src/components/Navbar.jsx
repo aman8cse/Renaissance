@@ -12,18 +12,13 @@ export default function Navbar() {
     const mobileOptionRef = useRef([]);
 
     function handleClick(option) {
-<<<<<<< HEAD
-=======
         setMenu(false);
->>>>>>> second
         if(option === "E-Cell") {
             window.open("https://www.edcjss.com/");
             return;
         }
          navigate(`/${option.toLowerCase()}`);
     }
-<<<<<<< HEAD
-=======
 
     useEffect(() => {
         function handleClickOutside(e) {
@@ -38,7 +33,6 @@ export default function Navbar() {
             document.removeEventListener("click", handleClickOutside);
         };
     }, []);
->>>>>>> second
     
 
     const mobileMenu = (<>

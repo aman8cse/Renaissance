@@ -19,11 +19,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      callback(null, origin); // Allow all origins
-    },
+    origin: "http://localhost:5173", // local frontend
     credentials: true,
-  }),
+  })
 );
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));

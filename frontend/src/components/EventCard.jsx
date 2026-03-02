@@ -1,11 +1,8 @@
 import React from "react";
-import RegisterBtn from "./registerButton";
 import '../styles/registerButton.css';
 import '../styles/eventCard.css';
 
-export default function EventCard({ title, date, location, description, image, badge, onClick }) {
-
-  const btn = (<div className='button'>Register</div>);
+export default function EventCard({ title, date, location, description, image, badge, btn }) {
 
   return (
     <div className="eventCard">
