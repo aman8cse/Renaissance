@@ -4,7 +4,7 @@ import { EventRegistration } from "../models/eventRegModel.js";
 export const createEvent = async(req, res, next) => {
     try{
         const { title, slug, eventType, description, bannerImage, startDatetime, endDatetime, location, entryFeeCoins, extraDetails } = req.body;
-        if(!title || !eventType || !description || !location) {
+        if(!title || !slug || !eventType || !description || !location) {
             return res.status(400).json({ message: "Missing required fields"});
         }
 
@@ -135,12 +135,12 @@ export const registerForEvent = async (req, res, next) => {
 
 export const cancelRegistration = async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const user = req.user;
         const { slug } = req.params;
         const event = await Event.findOne({ slug });
 
         const registration = await EventRegistration.findOne({
-            user: userId, 
+            user: user._id, 
             event: event._id
         });
 

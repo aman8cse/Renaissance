@@ -39,7 +39,7 @@ export default function Login() {
 
     } catch (err) {
       console.error("Error:", err);
-      alert("Server not responding");
+      alert("err", err.message);
     }
   }
 
@@ -59,7 +59,7 @@ export default function Login() {
       });
 
       if (!res.ok) {
-        const error = await res.json(); 
+        const error = await res.json();
         alert(error.message);
         return;
       }
@@ -69,7 +69,7 @@ export default function Login() {
 
     } catch (err) {
       console.error("Error:", err);
-      alert("Server not responding");
+      alert(err);
     }
   }
 

@@ -43,3 +43,76 @@
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
 }
+
+.createEventWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 6vh 0;
+}
+
+.createEventGlassCard {
+  width: min(900px, 90vw);
+  padding: 4vh 4vw;
+  border-radius: 24px;
+
+  backdrop-filter: blur(18px);
+  background: rgba(20,20,25,0.35);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.createEventHeader h2 {
+  font-size: 1.8rem;
+}
+
+.createEventSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inputGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 1rem;
+}
+
+.createEventGlassCard input,
+.createEventGlassCard textarea,
+.createEventGlassCard select {
+  padding: 0.8rem;
+  border-radius: 10px;
+
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+.bannerPreviewContainer {
+  margin-top: 1rem;
+}
+
+.bannerPreview {
+  width: 100%;
+  border-radius: 14px;
+}
+
+.createEventBtn {
+  margin-top: 1rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: 14px;
+
+  background: linear-gradient(90deg,#F1E821,#23C0AD,#487AFA);
+  color: black;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+option {
+  background-color: rgb(0, 0, 0);
+}
