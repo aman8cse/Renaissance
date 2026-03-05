@@ -47,20 +47,28 @@ export const createEvent = async(req, res, next) => {
 };
 
 export const deleteEvent = async (req, res, next) => {
-    try{
-        const { slug } = req.params;
+  try {
 
-        const deleted = await Event.deleteOne({ slug });
-        if (deleted.deletedCount === 0) {
-            return res.status(404).json({ message: "Event not found" });
-        }
+    const { slug } = req.params;
 
-        await EventRegistration.deleteMany({ slug }); 
+    const event = await Event.findOne({ slug });
 
-        res.json({ success: true, message: "Event deleted successfully"});
-    } catch (err) {
-        next(err);
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
     }
+
+    await Event.deleteOne({ _id: event._id });
+
+    await EventRegistration.deleteMany({ event: event._id });
+
+    res.json({
+      success: true,
+      message: "Event deleted successfully"
+    });
+
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const getAllEvents = async (req, res, next) => {
@@ -160,7 +168,8 @@ export const cancelRegistration = async (req, res, next) => {
 export const getMyEvents = async(req, res, next) => {
     try {
         const user = req.user;
-        const events = await EventRegistration.find({ user: user._id });
+        const registrations = await EventRegistration.find({ user: user._id }).populate("event");
+        const events = registrations.map(r => r.event);
 
         res.status(200).json({
             success: true,
