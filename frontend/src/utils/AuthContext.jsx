@@ -4,14 +4,14 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function checkAuth() {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/user/current-user",
+        `${BASE_URL}/user/current-user`,
         { credentials: "include" }
       );
 

@@ -5,13 +5,14 @@ import EventCard from '../components/EventCard';
 import Loader from '../components/Loader';
 
 export default function Event() {
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
     const [eventsData, setEventsData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     async function getAllEvents() {
         setLoading(true)
         try {
-            const res = await fetch("http://localhost:5000/api/events/get-all", {
+            const res = await fetch(`${BASE_URL}/events/get-all`, {
                 method: "GET",
                 credentials: "include",
             })
@@ -36,7 +37,7 @@ export default function Event() {
     async function handleRegister(slug) {
         setLoading(true)
         try{
-            const res = await fetch(`http://localhost:5000/api/events/${slug}/register`, {
+            const res = await fetch(`${BASE_URL}/events/${slug}/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

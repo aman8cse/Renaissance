@@ -7,7 +7,7 @@ import Loader from "./Loader";
 
 export default function UserDashboard() {
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [user, setUser] = useState(null);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function UserDashboard() {
   async function fetchDashboard() {
     try {
       const userRes = await fetch(
-        "http://localhost:5000/api/user/current-user",
+        `${BASE_URL}/user/current-user`,
         { credentials: "include" }
       );
 
@@ -30,7 +30,7 @@ export default function UserDashboard() {
       setUser(userData.data);
 
       const eventsRes = await fetch(
-        "http://localhost:5000/api/events/my-events",
+        `${BASE_URL}/events/my-events`,
         { credentials: "include" }
       );
 
@@ -48,7 +48,7 @@ export default function UserDashboard() {
   async function cancelRegistration(slug) {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${slug}/cancel`, {
+      const res = await fetch(`${BASE_URL}/events/${slug}/cancel`, {
         method: "DELETE",
         credentials: "include"
       });
@@ -73,7 +73,7 @@ export default function UserDashboard() {
   }
   async function getAllEvents() {
     try {
-      const res = await fetch("http://localhost:5000/api/events/get-all", {
+      const res = await fetch(`${BASE_URL}/events/get-all`, {
         method: "GET",
         credentials: "include",
       })
@@ -95,7 +95,7 @@ export default function UserDashboard() {
   async function deleteEvent(slug) {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/events/${slug}/delete`, {
+      const res = await fetch(`${BASE_URL}/events/${slug}/delete`, {
         method: "DELETE",
         credentials: "include"
       });
@@ -120,7 +120,7 @@ export default function UserDashboard() {
   }
   async function handleLogout() {
     setLoading(true)
-    await fetch("http://localhost:5000/api/user/logout", {
+    await fetch(`${BASE_URL}/user/logout`, {
       method: "POST",
       credentials: "include",
     });
