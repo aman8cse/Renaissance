@@ -4,7 +4,7 @@ import "../styles/login.css";
 
 export default function Login() {
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [form, setForm] = useState({ email: "", password: "", mobile: "", username: "" });
   const [isLogin, setIsLogin] = useState(true);
 
@@ -19,7 +19,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/user/sign-up", {
+      const res = await fetch(`${BASE_URL}/user/sign-up`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default function Login() {
   async function handleLogin(e) {
     e.preventDefault();
     try{
-      const res = await fetch("http://localhost:5000/api/user/login", {
+      const res = await fetch(`${BASE_URL}/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

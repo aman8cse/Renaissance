@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import "../styles/users.css";
 
-export default function Users() {
 
+export default function Users() {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [users, setUsers] = useState([]);
 
   async function fetchUsers() {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/user/get-all-users",
+        `${BASE_URL}/user/get-all-users`,
         { credentials: "include" }
       );
 
@@ -24,7 +25,7 @@ export default function Users() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/user/${userId}/update-user-details`,
+        `${BASE_URL}/user/${userId}/update-user-details`,
         {
           method: "PATCH",
           headers: {

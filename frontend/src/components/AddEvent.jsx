@@ -5,6 +5,7 @@ import Loader from './Loader';
 
 export default function AddEvent() {
     const navigate = useNavigate();
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         title: "",
@@ -24,7 +25,7 @@ export default function AddEvent() {
         e.preventDefault();
 
         try {
-            const res = await fetch("http://localhost:5000/api/events/create-new", {
+            const res = await fetch(`${BASE_URL}/events/create-new`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
