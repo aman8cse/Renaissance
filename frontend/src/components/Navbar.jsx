@@ -3,9 +3,11 @@ import { gsap } from "gsap";
 import '../styles/navbar.css';
 import RegisterBtn from '../components/registerButton.jsx'
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext.jsx';
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const { user } = useAuth();
     const options = ["Events", "Speakers", "Itenary", "Sponsors", "E-Cell"];
     const[menu, setMenu] = useState(false); 
     const menuRef = useRef(null);
@@ -41,7 +43,7 @@ export default function Navbar() {
             {options.map((option, i) => (
                 <div onClick={() => handleClick(option)} key={i} ref={(el) => (mobileOptionRef.current[i] = el)} className='option'>{option}</div>
             ))}
-            <RegisterBtn onClick={() => {navigate("/auth"); setMenu(false)}} name={"Register"} />
+            <RegisterBtn onClick={() => {navigate(user ? "/userDashboard" : "/auth"); setMenu(false)}} name={user ? `Hi! ${user.username}` : "Register"} />
             <br />
         </div>
         </>
@@ -54,7 +56,7 @@ export default function Navbar() {
                 {options.map((option, i) => (
                     <div key={i} className='option' onClick={() => handleClick(option)}>{option}</div>
                 ))}
-                <RegisterBtn onClick={() => navigate("/auth")} name={"Register"} />
+                <RegisterBtn onClick={() => navigate(user ? "/userDashboard" : "/auth")} name={user ? `Hi! ${user.username}` : "Register"} />
                 <br />
             </div> 
             <div className="hamburger" onClick={(e) => {e.stopPropagation(); setMenu(prev => !prev)}}>{menu ? "X" : "☰"}</div> 

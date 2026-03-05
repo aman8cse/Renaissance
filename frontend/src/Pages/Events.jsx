@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/event.css';
 import RegisterBtn from '../components/registerButton';
-import EventCard from '../components/EventCard'
+import EventCard from '../components/EventCard';
+import Loader from '../components/Loader';
 
 export default function Event() {
     const [eventsData, setEventsData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     async function getAllEvents() {
+        setLoading(true)
         try {
             const res = await fetch("http://localhost:5000/api/events/get-all", {
                 method: "GET",
@@ -15,19 +18,23 @@ export default function Event() {
 
             if(!res.ok) {
                 const errorData = await res.json();
+                setLoading(false)
                 alert(errorData.message);
                 return;
             }
 
             const data = await res.json();
+            setLoading(false)
             setEventsData(data.events);
 
         } catch (err) {
             console.log("Error:", err);
+            setLoading(false)
             alert(err);
         }
     }
     async function handleRegister(slug) {
+        setLoading(true)
         try{
             const res = await fetch(`http://localhost:5000/api/events/${slug}/register`, {
                 method: "POST",
@@ -39,15 +46,18 @@ export default function Event() {
 
             if(!res.ok) {
                 const errorData = await res.json();
+                setLoading(false)
                 alert(errorData.message);
                 return;
             }
 
             const response = await res.json();
+            setLoading(false)
             alert(response.message);
 
         } catch (err) {
             console.log("Registration error: ", err);
+            setLoading(false)
             alert("Registration service not working");
         }
     }
@@ -57,6 +67,7 @@ export default function Event() {
 
     return (
         <div className="event">
+            {loading && <Loader/>}
             {eventsData.map(event => (
                 <EventCard
                     key={event._id}
@@ -64,7 +75,7 @@ export default function Event() {
                     slug={event.slug}
                     eventType={event.eventType}
                     description={event.description}
-                    bannerImage={event.bannerImage}
+                    bannerImage={event.bannerImage || null}
                     startDatetime={event.startDatetime}
                     endDatetime={event.endDatetime}
                     location={event.location}

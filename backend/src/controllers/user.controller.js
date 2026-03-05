@@ -73,7 +73,6 @@ const signup = asyncHandler(async (req, res) => {
     .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(201, loggedInUser, "user register successdully"));
 });
-
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -172,13 +171,14 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Password change successfully "));
 });
 const updateAccountDetails = asyncHandler(async (req, res) => {
-  const { username, email, mobile } = req.body;
+  const { username, email, mobile, role } = req.body;
   const user = await User.findByIdAndUpdate(
-    req.user._id,
+    req.params?.userId,
     {
       username,
       email,
       mobile,
+      role
     },
     { new: true },
   );
@@ -238,16 +238,20 @@ const getUserById = asyncHandler(async (req, res) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "User fetchedsuccessfully"));
+    .json(new ApiResponse(200, user, "User fetched successfully"));
 
 });
-
 const getAllUsers = asyncHandler(async (req, res) => {
 
-  const users = await User.find();
-  return res
-    .status(200)
-    .json(new ApiResponse(200, users, "Users fetched successfully"));
+  const users = await User
+    .find()
+    .select("-password -refreshToken")
+    .sort({ createdAt: -1 });
+
+  res.status(200).json(
+    new ApiResponse(200, users, "Users fetched successfully")
+  );
+
 });
 
 

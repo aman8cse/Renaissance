@@ -11,7 +11,7 @@ router.post("/logout", verifyJWT, logoutUser);
 router.route("/change-password").patch(verifyJWT, changeCurrentPassword);
 router.get("/current-user", verifyJWT, getCurrentUser);
 router.route("/find-user").post(verifyJWT,authorizeRoles(1,2), getUserById);
-router.route("/get-all-user").get(verifyJWT,authorizeRoles(1,2), getAllUsers);
-router.route("/update-user-details").post(verifyJWT,  updateAccountDetails);
+router.route("/get-all-users").get(verifyJWT,authorizeRoles(1,2), getAllUsers);
+router.route("/:userId/update-user-details").post(verifyJWT, authorizeRoles(2), updateAccountDetails);
 
 export default router;
